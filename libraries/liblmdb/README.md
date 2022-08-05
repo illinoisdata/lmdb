@@ -1,4 +1,4 @@
-mark Instruction
+# Benchmark Instruction
 
 This is an instruction to benchmark LMDB for experiments in AirIndex: Versatile Index Tuning Through Data and Storage.
 
