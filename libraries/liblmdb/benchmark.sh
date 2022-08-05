@@ -9,7 +9,8 @@ DATASET_NAMES=(
 )
 
 ROOT=$1
-RELOAD=$2
+KEYSET_PATH=$2
+RELOAD=$3
 OUT_PATH=${ROOT}/out
 
 mkdir -p ${OUT_PATH}
@@ -23,7 +24,7 @@ for ((i = 0; i < ${#DATASET_NAMES[@]}; i++)) do
         echo ">>> ${dataset_name} ${j}"
 	    bash ${RELOAD}
 	    make kv_benchmark && ./kv_benchmark \
-	        --key_path=${HOME}/keyset/${dataset_name}_ks_${j} \
+	        --key_path=${KEYSET_PATH}/${dataset_name}_ks_${j} \
 	        --target_db_path=${ROOT}/storage/lmdb/${dataset_name} \
 	        --out_path=${OUT_PATH}/${dataset_name}_out.txt
     done
