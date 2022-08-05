@@ -9,18 +9,19 @@ DATASET_NAMES=(
 
 ROOT=$1
 DATA_PATH=$2
-echo "${ROOT}"
 
+echo "${ROOT}"
 echo "Start LMDB Scalability Test"
+
+make kv_build
 
 for ((i = 0; i < ${#DATASET_NAMES[@]}; i++)) do
     mkdir -p ${ROOT}/temp/lmdb/${dataset_name}
     mkdir -p ${ROOT}/storage/lmdb/${dataset_name}
     dataset_name="${DATASET_NAMES[$i]}"
     echo ">>> ${dataset_name} ${j}"
-    export RAYON_NUM_THREADS=128
     SECONDS=0
-    make kv_build && ./kv_build \
+    ./kv_build \
         --data_path=${DATA_PATH}/${dataset_name} \
         --build_db_path=${ROOT}/temp/lmdb/${dataset_name} \
         --target_db_path=${ROOT}/storage/lmdb/${dataset_name}
