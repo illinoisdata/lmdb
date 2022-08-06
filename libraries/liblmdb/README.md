@@ -15,7 +15,7 @@ make install
 To build indexes for all datasets
 
 ```
-bash build.sh file:///path/to/output file:///path/to/data
+bash build.sh /path/to/output /path/to/data
 ```
 
 ## Benchmark (5.2)
@@ -23,7 +23,7 @@ bash build.sh file:///path/to/output file:///path/to/data
 Benchmark over 40 key set of 1M keys
 
 ```
-bash benchmark.sh file:///path/to/output file:///path/to/keyset ~/reload_local.sh
+bash benchmark.sh /path/to/output /path/to/keyset ~/reload_local.sh
 ```
 
 The measurements will be recorded in `/path/to/output/out` folder.
@@ -33,6 +33,6 @@ The measurements will be recorded in `/path/to/output/out` folder.
 To measure the build time, run the build script.
 
 ```
-bash scale.sh file:///path/to/output file:///path/to/data
+bash scale.sh /path/to/output /path/to/data
 ```
 
