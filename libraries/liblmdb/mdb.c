@@ -279,7 +279,7 @@ union semun {
 
 	/** Features under development */
 #ifndef MDB_DEVEL
-#define MDB_DEVEL 0
+#define MDB_DEVEL 1
 #endif
 
 	/** Wrapper around __func__, which is a C99 feature */
@@ -473,7 +473,12 @@ typedef pthread_mutex_t *mdb_mutexref_t;
 	 *	This is the basic size that the platform's memory manager uses, and is
 	 *	fundamental to the use of memory-mapped files.
 	 */
-#define	GET_PAGESIZE(x)	((x) = sysconf(_SC_PAGE_SIZE))
+#define	GET_PAGESIZE(x)	{\
+  const char * val = getenv("LMDB_PAGESIZE"); \
+  unsigned int ps = (val == NULL) ? sysconf(_SC_PAGE_SIZE) : atoi(val); \
+  printf("GET_PAGESIZE= %u\n", ps); \
+  (x) = ps; \
+}
 #endif
 
 #define	Z	MDB_FMT_Z	/**< printf/scanf format modifier for size_t */
@@ -4429,6 +4434,7 @@ mdb_env_create(MDB_env **env)
 #endif
 	e->me_pid = getpid();
 	GET_PAGESIZE(e->me_os_psize);
+  printf("GET_PAGESIZE(e->me_os_psize)= %u\n", e->me_os_psize);
 	VGMEMP_CREATE(e,0,0);
 	*env = e;
 	return MDB_SUCCESS;
@@ -4936,6 +4942,7 @@ mdb_env_open2(MDB_env *env, int prev)
 	} else {
 		env->me_psize = meta.mm_psize;
 	}
+  printf("env->me_psize= %u\n", env->me_psize);
 
 	/* Was a mapsize configured? */
 	if (!env->me_mapsize) {
