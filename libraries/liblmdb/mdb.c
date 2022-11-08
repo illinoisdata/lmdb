@@ -279,7 +279,7 @@ union semun {
 
 	/** Features under development */
 #ifndef MDB_DEVEL
-#define MDB_DEVEL 1
+#define MDB_DEVEL 0
 #endif
 
 	/** Wrapper around __func__, which is a C99 feature */
@@ -6475,12 +6475,14 @@ mdb_page_search_root(MDB_cursor *mc, MDB_val *key, int flags)
 	MDB_page	*mp = mc->mc_pg[mc->mc_top];
 	int rc;
 	DKBUF;
+  // printf("mdb_page_search_root(%p, key= %p, flags= %d)\n", mc, key, flags);
 
 	while (IS_BRANCH(mp)) {
 		MDB_node	*node;
 		indx_t		i;
 
-		DPRINTF(("branch page %"Yu" has %u keys", mp->mp_pgno, NUMKEYS(mp)));
+    DPRINTF(("branch page %"Yu" has %u keys", mp->mp_pgno, NUMKEYS(mp)));
+    // printf("branch page %"Yu" has %u keys\n", mp->mp_pgno, NUMKEYS(mp));
 		/* Don't assert on branch pages in the FreeDB. We can get here
 		 * while in the process of rebalancing a FreeDB branch page; we must
 		 * let that proceed. ITS#8336
@@ -6587,6 +6589,7 @@ mdb_page_search(MDB_cursor *mc, MDB_val *key, int flags)
 {
 	int		 rc;
 	pgno_t		 root;
+  // printf("mdb_page_search(%p, key= %p, flags= %d)\n", mc, key, flags);
 
 	/* Make sure the txn is still viable, then find the root from
 	 * the txn's db table and set it as the root of the cursor's stack.
