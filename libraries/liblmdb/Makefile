@@ -42,7 +42,7 @@ IHDRS	= lmdb.h
 ILIBS	= liblmdb.a liblmdb$(SOEXT)
 IPROGS	= mdb_stat mdb_copy mdb_dump mdb_load mdb_drop
 IDOCS	= mdb_stat.1 mdb_copy.1 mdb_dump.1 mdb_load.1 mdb_drop.1
-PROGS	= $(IPROGS) mtest mtest2 mtest3 mtest4 mtest5 sanity kv_build kv_benchmark
+PROGS	= $(IPROGS) mtest mtest2 mtest3 mtest4 mtest5 sanity kv_build kv_benchmark kv_benchmark_rw
 all:	$(ILIBS) $(PROGS)
 
 install: $(ILIBS) $(IPROGS) $(IHDRS)
@@ -83,6 +83,7 @@ mtest6:	mtest6.o liblmdb.a
 sanity:	sanity.o liblmdb.a
 kv_build:	kv_build.o liblmdb.a
 kv_benchmark: kv_benchmark.o liblmdb.a
+kv_benchmark_rw: kv_benchmark_rw.o liblmdb.a
 
 mdb.o: mdb.c lmdb.h midl.h
 	$(CC) $(CFLAGS) $(CPPFLAGS) -c mdb.c
